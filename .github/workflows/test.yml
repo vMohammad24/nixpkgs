@@ -26,6 +26,25 @@ jobs:
           sparse-checkout: |
             ci/github-script
       
+      # TODO: remove this!
+      - env:
+          CI_CLIENT_ID: ${{ vars.NIXPKGS_CI_CLIENT_ID }}
+          CI_PRIVATE_KEY: ${{ secrets.NIXPKGS_CI_APP_PRIVATE_KEY }}
+          COMMIT_CLIENT_ID: ${{ vars.NIXPKGS_COMMIT_CHECK_CLIENT_ID }}
+          COMMIT_PRIVATE_KEY: ${{ secrets.NIXPKGS_COMMIT_CHECK_APP_PRIVATE_KEY }}
+        run: |
+          echo -n "Commit Client ID has length: "
+          echo -n "$COMMIT_CLIENT_ID" | wc -c
+
+          echo -n "Commit Private key has length: "
+          echo -n "$COMMIT_PRIVATE_KEY" | wc -c
+
+          echo -n "CI Client ID has length: "
+          echo -n "$CI_CLIENT_ID" | wc -c
+
+          echo -n "CI Private key has length: "
+          echo -n "$CI_PRIVATE_KEY" | wc -c
+      
       - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         if: vars.NIXPKGS_COMMIT_CHECK_CLIENT_ID
         id: app-token
